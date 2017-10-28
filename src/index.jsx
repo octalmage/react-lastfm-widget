@@ -4,22 +4,22 @@ import styled from 'styled-components';
 import Transition from 'react-transition-group/Transition';
 import FetchLastfmTracks from './FetchLastfmTracks';
 
-const buildStyles = artwork => ({
+const buildStyles = (size, artwork) => ({
   container: {
     transition: 'opacity 800ms ease-in-out',
     opacity: 0,
     backgroundImage: `url("${artwork}")` || '',
     position: 'relative',
     backgroundSize: 'cover',
+    fontSize: `${size.slice(0, -2) * 0.06}px`,
   },
   details: {
-    fontSize: '12px',
-    lineHeight: '18px',
+    lineHeight: '1.5em',
     textShadow: '0 0 10px rgba(0,0,0,.7)',
     position: 'absolute',
-    bottom: '15px',
-    left: '15px',
-    right: '15px',
+    bottom: '1.25em',
+    left: '1.25em',
+    right: '1.25em',
     margin: '0',
     color: '#fff',
     fontFamily: 'Arial, Helvetica, sans-serif',
@@ -27,8 +27,8 @@ const buildStyles = artwork => ({
     zIndex: '1',
   },
   title: {
-    fontSize: '18px',
-    lineHeight: '24px',
+    fontSize: '1.5em',
+    lineHeight: '2em',
   },
 });
 
@@ -98,11 +98,10 @@ class LastfmWidget extends React.Component {
     const {
       username,
       onlyShowNowPlaying,
-      height,
-      width,
+      size,
     } = this.props;
     const { track } = this.state;
-    const styles = buildStyles(track.artwork);
+    const styles = buildStyles(size, track.artwork);
 
     const inProp = onlyShowNowPlaying ? track.nowplaying : track.name !== '';
 
@@ -111,8 +110,8 @@ class LastfmWidget extends React.Component {
         {state => (
           <div
             style={{
-              height,
-              width,
+              height: size,
+              width: size,
               ...styles.container,
               ...transitionStyles[state],
             }}
@@ -139,16 +138,13 @@ LastfmWidget.propTypes = {
   apikey: PropTypes.string.isRequired,
   /** Only display the widget if a song is currently playing. */
   onlyShowNowPlaying: PropTypes.bool,
-  /** Overwrite default width. */
-  width: PropTypes.string,
-  /** Overwrite default height. */
-  height: PropTypes.string,
+  /** Overwrite default size. */
+  size: PropTypes.string,
 };
 
 LastfmWidget.defaultProps = {
   onlyShowNowPlaying: false,
-  width: '200px',
-  height: '200px',
+  size: '200px',
 };
 
 export default LastfmWidget;

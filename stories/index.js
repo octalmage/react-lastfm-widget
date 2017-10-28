@@ -23,8 +23,9 @@ storiesOf('LastfmWidget', module)
     <LastfmWidget {...defaultProps} onlyShowNowPlaying />))
   .add('Different Widget Sizes', withInfo()(() => (
     <div className="sizes">
-      <LastfmWidget {...defaultProps} height="150px" width="150px" />
-      <LastfmWidget {...defaultProps} height="250px" width="250px" />
-      <LastfmWidget {...defaultProps} height="300px" width="300px" />
+      <LastfmWidget {...defaultProps} size="100px" />
+      <LastfmWidget {...defaultProps} size="150px" />
+      <LastfmWidget {...defaultProps} size="250px" />
+      <LastfmWidget {...defaultProps} size="300px" />
     </div>
   )));
