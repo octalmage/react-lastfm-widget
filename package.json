@@ -7,7 +7,7 @@
     "test": "npm run lint && npm run jest",
     "jest": "jest --coverage src/*.spec.js",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook -o docs",
     "build": "BABEL_ENV=production babel src --out-dir lib -s",
     "lint": "eslint --ext .js --ext .jsx .",
     "prepublish": "npm run build"

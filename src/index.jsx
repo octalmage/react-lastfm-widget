@@ -28,7 +28,7 @@ const buildStyles = (size, artwork) => ({
   },
   title: {
     fontSize: '1.5em',
-    lineHeight: '2em',
+    lineHeight: '1.5em',
   },
 });
 
