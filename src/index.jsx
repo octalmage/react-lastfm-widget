@@ -1,45 +1,61 @@
 import React from 'react'; // eslint-disable-line
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Transition from 'react-transition-group/Transition';
 import FetchLastfmTracks from './FetchLastfmTracks';
 
-
-// jQuery.get( "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=comic_coder&api_key=1f633977acf0e2d0630ec11dbc350d3e&format=json", function( data ) {
-//   if (typeof data.recenttracks.track[0]["@attr"] != "undefined")
-//   {
-//     artist=data.recenttracks.track[0].artist["#text"];
-//     track=data.recenttracks.track[0].name;
-//     album=data.recenttracks.track[0].album["#text"];
-//     artwork=data.recenttracks.track[0].image[1]["#text"];
-//     jQuery("#artwork").attr("src", artwork);
-//     jQuery("#track").html(track + "<br>" + artist + "<br><br>" + album);
-//     jQuery("#last").fadeIn("slow");
-const styles = {
+const buildStyles = artwork => ({
   container: {
-    width: '200px',
     transition: 'opacity 800ms ease-in-out',
     opacity: 0,
+    backgroundImage: `url("${artwork}")` || '',
+    position: 'relative',
+    backgroundSize: 'cover',
   },
-  img: {
-    paddingRight: '5px',
-    borderRadius: '0',
-  },
-  p: {
-    float: 'left',
-  },
-  track: {
+  details: {
     fontSize: '12px',
-    lineHeight: '15px',
-    margin: '0px',
-    fontFamily: 'Times New Roman", Georgia, Serif',
+    lineHeight: '18px',
+    textShadow: '0 0 10px rgba(0,0,0,.7)',
+    position: 'absolute',
+    bottom: '15px',
+    left: '15px',
+    right: '15px',
+    margin: '0',
+    color: '#fff',
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    textDecoration: 'none',
+    zIndex: '1',
   },
-};
+  title: {
+    fontSize: '18px',
+    lineHeight: '24px',
+  },
+});
+
+const Gradient = styled.div`
+  &:after {
+    background-image: linear-gradient(180deg,transparent 0,rgba(0,0,0,.35) 70%,rgba(0,0,0,.7));
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+`;
+
+const Link = styled.a`
+  color: #fff;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const transitionStyles = {
   entering: { opacity: 0 },
   entered: { opacity: 1 },
 };
-
 
 class LastfmWidget extends React.Component {
   static formatTrack(track) {
@@ -47,7 +63,7 @@ class LastfmWidget extends React.Component {
       artist: track.artist['#text'],
       name: track.name,
       album: track.album['#text'],
-      artwork: track.image[1]['#text'],
+      artwork: track.image[2]['#text'],
       nowplaying: typeof track['@attr'] !== 'undefined' && typeof track['@attr'].nowplaying !== 'undefined',
     };
   }
@@ -79,31 +95,36 @@ class LastfmWidget extends React.Component {
   }
 
   render() {
-    const { username, onlyShowNowPlaying } = this.props;
+    const {
+      username,
+      onlyShowNowPlaying,
+      height,
+      width,
+    } = this.props;
     const { track } = this.state;
+    const styles = buildStyles(track.artwork);
 
-    if (onlyShowNowPlaying && !track.nowplaying) {
-      return null;
-    }
+    const inProp = onlyShowNowPlaying ? track.nowplaying : track.name !== '';
 
     return (
-      <Transition in={track.name !== ''} timeout={800}>
+      <Transition in={inProp} timeout={800}>
         {state => (
-          <div style={{
-          ...styles.container,
-          ...transitionStyles[state],
-        }}
+          <div
+            style={{
+              height,
+              width,
+              ...styles.container,
+              ...transitionStyles[state],
+            }}
           >
-            <div style={styles.p}>
-              <a target="_blank" rel="noopener noreferrer" href={`http://www.last.fm/user/${username}/now`}>
-                <img style={styles.img} id="artwork" src={track.artwork} alt="" />
-              </a>
+            <div style={styles.details} id="track">
+              <Link target="_blank" rel="noopener noreferrer" href={`http://www.last.fm/user/${username}/now`}>
+                <span style={styles.title}>{track.name}</span><br />
+                {track.artist}<br />
+                {track.album}
+              </Link>
             </div>
-            <div style={styles.track} id="track">
-              <strong>{track.name}</strong><br />
-              {track.artist}<br />
-              {track.album}
-            </div>
+            <Gradient />
           </div>
           )}
       </Transition>
@@ -112,13 +133,22 @@ class LastfmWidget extends React.Component {
 }
 
 LastfmWidget.propTypes = {
+  /** The Last.fm username. */
   username: PropTypes.string.isRequired,
+  /** Your Last.fm apikey. */
   apikey: PropTypes.string.isRequired,
+  /** Only display the widget if a song is currently playing. */
   onlyShowNowPlaying: PropTypes.bool,
+  /** Overwrite default width. */
+  width: PropTypes.string,
+  /** Overwrite default height. */
+  height: PropTypes.string,
 };
 
 LastfmWidget.defaultProps = {
   onlyShowNowPlaying: false,
+  width: '200px',
+  height: '200px',
 };
 
 export default LastfmWidget;

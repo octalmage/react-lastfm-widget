@@ -21,7 +21,8 @@
   "dependencies": {
     "fetch-everywhere": "^1.0.5",
     "prop-types": "^15.6.0",
-    "react-transition-group": "^2.2.1"
+    "react-transition-group": "^2.2.1",
+    "styled-components": "^2.2.2"
   },
   "peerDependencies": {
     "react": "^15.6.2",
