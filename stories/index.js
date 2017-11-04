@@ -1,8 +1,7 @@
-/* eslint import/no-extraneous-dependencies: 0 */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo, setDefaults } from '@storybook/addon-info';
-import LastfmWidget from '../src/index';
+import LastfmWidget from '../src/index.bs';
 import './index.css';
 
 setDefaults({
