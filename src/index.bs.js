@@ -130,11 +130,6 @@ lastfmWidget.propTypes = {
   /** Overwrite default size. */
   size: PropTypes.string,
 };
-
-/* lastfmWidget.defaultProps = {
-  onlyShowNowPlaying: false,
-  size: '200px',
-}; */
 export default lastfmWidget;
 
 ;
