@@ -1,6 +1,6 @@
 {
   "name": "react-lastfm-widget",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Display the most recent Last.fm scrobble for a user.",
   "main": "lib/index.js",
   "scripts": {
