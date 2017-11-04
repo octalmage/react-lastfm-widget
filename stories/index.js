@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo, setDefaults } from '@storybook/addon-info';
-import LastfmWidget from '../src/index.bs';
+import LastfmWidget from '../lib/index.js';
 import './index.css';
 
 setDefaults({

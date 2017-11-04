@@ -122,7 +122,7 @@ let make =
   }
 };
 
-let lastfmWidget =
+let default =
   ReasonReact.wrapReasonForJs(
     ~component,
     (jsProps) =>
@@ -137,8 +137,9 @@ let lastfmWidget =
 
 [%%bs.raw
   {|
+// Fake PropTypes for Stroybook, I wish I didn't have to do this.
 let PropTypes = require('prop-types');
-lastfmWidget.propTypes = {
+$$default.propTypes = {
   /** The Last.fm username. */
   username: PropTypes.string.isRequired,
   /** Your Last.fm apikey. */
@@ -148,6 +149,5 @@ lastfmWidget.propTypes = {
   /** Overwrite default size. */
   size: PropTypes.string,
 };
-export default lastfmWidget;
 |}
 ];

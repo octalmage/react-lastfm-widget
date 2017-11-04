@@ -114,13 +114,14 @@ function make(username, apikey, onlyShowNowPlaying, $staropt$star, _) {
   return newrecord;
 }
 
-var lastfmWidget = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
+var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
         return make(jsProps.username, jsProps.apikey, Js_primitive.null_undefined_to_opt(jsProps.onlyShowNowPlaying), Js_primitive.null_undefined_to_opt(jsProps.size), /* array */[]);
       }));
 
 
+// Fake PropTypes for Stroybook, I wish I didn't have to do this.
 let PropTypes = require('prop-types');
-lastfmWidget.propTypes = {
+$$default.propTypes = {
   /** The Last.fm username. */
   username: PropTypes.string.isRequired,
   /** Your Last.fm apikey. */
@@ -130,7 +131,6 @@ lastfmWidget.propTypes = {
   /** Overwrite default size. */
   size: PropTypes.string,
 };
-export default lastfmWidget;
 
 ;
 
@@ -138,5 +138,7 @@ exports.decodeTracks      = decodeTracks;
 exports.parseResponseJson = parseResponseJson;
 exports.component         = component;
 exports.make              = make;
-exports.lastfmWidget      = lastfmWidget;
+exports.$$default         = $$default;
+exports.default           = $$default;
+exports.__esModule        = true;
 /* component Not a pure module */
