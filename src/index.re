@@ -137,17 +137,33 @@ let default =
 
 [%%bs.raw
   {|
-// Fake PropTypes for Stroybook, I wish I didn't have to do this.
-let PropTypes = require('prop-types');
-$$default.propTypes = {
-  /** The Last.fm username. */
-  username: PropTypes.string.isRequired,
-  /** Your Last.fm apikey. */
-  apikey: PropTypes.string.isRequired,
-  /** Only display the widget if a song is currently playing. */
-  onlyShowNowPlaying: PropTypes.bool,
-  /** Overwrite default size. */
-  size: PropTypes.string,
+// Fake PropTypes for Stroybook.
+$$default.__docgenInfo = {
+  displayName: "LastfmWidget",
+  props: {
+    username: {
+      required: true,
+      description: "Your Last.fm username.",
+      type: { name: "string" },
+    },
+    apikey: {
+      required: true,
+      description: "Your Last.fm apikey.",
+      type: { name: "string" },
+    },
+    onlyShowNowPlaying: {
+      required: false,
+      description: "Only show your most recent track if it's current playing.",
+      type: { name: "bool" },
+      defaultValue: { value: false, computed: false },
+    },
+    size: {
+      required: false,
+      description: "The height and width of the widget.",
+      type: { name: "bool" },
+      defaultValue: { value: "200px", computed: false },
+    },
+  }
 };
 |}
 ];
